@@ -1,0 +1,34 @@
+@import './base.less';
+
+html {
+  font-size: @basefont;
+  background: #eee;
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+body, #root {
+  font-family: Merriweather, -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+  word-wrap: break-word;
+  word-break: normal;
+  color: #282828;
+  min-width: 320px;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}

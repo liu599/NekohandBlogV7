@@ -1,0 +1,41 @@
+@import './base.less';
+
+.author {
+  padding: 2em 0 0;
+}
+.authorLogo {
+  display: block;
+  margin: 10px auto;
+  border: 2px solid @fontColorRedCurrent;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+.authorName {
+  display: block;
+  font-family: "Comic Sans MS", "Microsoft Yahei", -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+  text-transform: uppercase;
+  a {
+    font-size: 1.8rem;
+    color: @fontColorB;
+    &:hover {
+      color: @fontColorRedCurrent;
+    }
+  }
+}
+.authorContact {
+  font-size: 3rem;
+  margin: 0;
+  a {
+    display: inline-block;
+    margin-left: 6px;
+    margin-right: 6px;
+    color: @fontColorB;
+  }
+}
+.authorReading {
+  font-size: 1.2rem;
+  color: @fontColorGray;
+  margin: .8em 1em;
+  text-indent: 1.6em;
+}

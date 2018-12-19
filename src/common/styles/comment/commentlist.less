@@ -1,0 +1,108 @@
+@import '../base.less';
+@import '../clearfix.mixin.less';
+
+.container {
+  p {
+    font-size: 1.4rem;
+  }
+  span {
+    margin: 0 4px;
+    font-size: 1.4rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+    margin: 0 10px;
+    display: inline-block;
+  }
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid @fontColorRedCurrent;
+    display: inline-block;
+  }
+}
+
+.commentDialog {
+  margin-top: 1em;
+}
+
+.thumbNail, .commentBodyMain {
+  display: inline-block;
+  position: relative;
+  vertical-align: text-top;
+  margin-right: 10px;
+}
+
+.commentBox {
+  display: inline-block;
+  position: relative;
+  vertical-align: text-top;
+  width: calc(100% - 80px);
+  padding: 0 8px;
+  .clearfix;
+}
+
+.textAreaContainer {
+  font-size: 1.4rem;
+  textarea {
+    position: relative;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    background: transparent;
+    border: none;
+  }
+  input {
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid grey;
+    max-width: 350px;
+    margin-right: 12px;
+  }
+}
+
+.textAreaReplyBtns {
+  margin-top: 1em;
+  float: right;
+}
+
+.commentBtn {
+  font-size: 1.4rem;
+  display: inline-block;
+  padding: 0 10px;
+  color: @fontColorW;
+  outline: none;
+  border: none;
+  background: #C62F2F;
+  &:hover {
+    background: @fontColorBlue;
+    color: @fontColorW;
+  }
+}
+
+.commentContents {
+  margin-top: 1em;
+}
+
+.commentBodyHead {
+  margin: -10px 0;
+}
+.commentAuthorName {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: @fontColorBlue;
+}
+
+.commentAuthorDate {
+  font-size: 0.8rem;
+  color: @fontColorGray;
+}
+
+.replies {
+  padding: 0.4em 2em;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "starblog_joy",
+  "version": "1.0.0",
+  "description": "star blog server-side-rendering",
+  "main": "index.js",
+  "repository": "http://git.nekohand.moe:2525/eddie32/starblog_joyful.git",
+  "author": "Tokei <970228409@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "joy dev"
+  },
+  "dependencies": {
+    "@symph/joy": "^0.5.6",
+    "@symph/joy-css": "latest",
+    "@symph/joy-image": "^0.4.1",
+    "@symph/joy-less": "latest",
+    "axios": "^0.18.0",
+    "jsonp": "^0.2.1",
+    "lodash": "^4.17.11",
+    "path-to-regexp": "^2.4.0",
+    "qs": "^6.6.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  }
+}

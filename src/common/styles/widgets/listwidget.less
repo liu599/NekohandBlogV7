@@ -1,0 +1,61 @@
+@import '../base.less';
+@import '../clearfix.mixin.less';
+
+.widget {
+  margin-top: 0;
+  padding: 0;
+  border: none;
+  //border-width: 0 1px 1px 1px;
+  //border-style: solid;
+  //border-color: #e1e1e4;
+  border-radius: 5px;
+  .clearfix;
+}
+
+.widgetHead, .widgetListHead {
+  //color: #fff;
+  //background: @fontColorBlue;
+  color: #222;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 2.2;
+    font-weight: 600;
+  }
+}
+.widgetHead {
+  border-bottom: 1px solid red;
+  margin-bottom: .6em;
+  margin-top: 1em;
+}
+.widgetContent {
+  padding: 0;
+  ul {
+    list-style: none;
+    //padding: 0 0 .6em 1.2em;
+    padding: 0;
+    .clearfix;
+  }
+  li {
+    font-size: 1.4rem;
+    @media (max-width: 1000px) {
+      font-size: 1.2rem;
+    }
+    float: left;
+    width: 48%;
+    a {
+      display: inline-block;
+    }
+  }
+}
+
+.widgetListHead {
+  h3 {
+    margin: 0;
+    text-indent: 0;
+  }
+}
