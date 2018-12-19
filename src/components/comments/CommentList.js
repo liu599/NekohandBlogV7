@@ -31,16 +31,16 @@ function assignData(data, key, e) {
 }
 
 function check(val) {
-    // let sanitizeHtml = require('sanitize-html');
-    // // return val.replace(/<[^>]+>|&[^>]+;/g,"").trim();
-    // return sanitizeHtml(val, {
-    //     allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
-    //     allowedAttributes: {
-    //         'a': [ 'href' ]
-    //     },
-    //     allowedIframeHostnames: ['www.youtube.com'],
-    // });
-    return val.replace(/<[^>]+>|&[^>]+;/g,"").trim();
+    let sanitizeHtml = require('sanitize-html');
+    // return val.replace(/<[^>]+>|&[^>]+;/g,"").trim();
+    return sanitizeHtml(val, {
+        allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
+        allowedAttributes: {
+            'a': [ 'href' ]
+        },
+        allowedIframeHostnames: ['www.youtube.com'],
+    });
+    // return val.replace(/<[^>]+>|&[^>]+;/g,"").trim();
 }
 
 function submitComment(data, dispatch, pid, e) {
