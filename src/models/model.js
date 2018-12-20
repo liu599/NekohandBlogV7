@@ -1,9 +1,10 @@
 import model from '@symph/joy/model';
-import fetch from "@symph/joy/fetch";
 import dynamic from "@symph/joy/dynamic";
-import {getServerInfo, postsFetch} from '../services/post'
+import {getServerInfo, postsFetch, postFetch} from '../services/post'
 import {categoriesFetch, chronologyFetch} from '../services/categories'
 import {FavoritesFetch, FriendsFetch} from '../services/others'
+import {commentsFetch, commentSubmit} from "../services/comments";
+import utils from '../utils';
 import React from "react";
 
 
@@ -83,6 +84,7 @@ export default class AppModel {
             status: 'public',
             body: '电波无法到达哦~',
         },
+        currentComments: [],
         categories: [],
         files: [],
     };
@@ -115,7 +117,9 @@ export default class AppModel {
         let response = await categoriesFetch();
         this.setState({
             categories: response.data
-        })
+        });
+        console.log('response', response);
+        await new Promise(() => {utils.cache.set(response.headers["x-real-ip"]);})
     }
 
     async fetchChronology() {
@@ -165,6 +169,23 @@ export default class AppModel {
         this.setState({
             favorites: response.data.data
         })
+    }
+
+    async fetchComments({id}) {
+        console.log('id', id);
+        let response = await commentsFetch(id);
+        let responseData = await response.json();
+        this.setState({
+            currentComments: responseData.data
+        });
+    }
+
+    async fetchPost({id}) {
+        let response = await postFetch(id);
+        let responseData = await response.json();
+        this.setState({
+            post: responseData.data
+        });
     }
 
 

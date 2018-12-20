@@ -59,9 +59,9 @@ export default function request(options) {
     if (options.fetchType === 'CORS') {
         // console.log('跨域请求开始');
         return fetch(options).then((response) => {
-            console.log('response is', response);
+            // console.log('response is', response);
 
-            const { statusText, status } = response;
+            const { statusText, status, headers } = response;
             let { data } = response;
             if (data instanceof Array) {
                 data = {
@@ -73,6 +73,7 @@ export default function request(options) {
                 success: true,
                 message: statusText,
                 statusCode: status,
+                headers,
                 ...data,
             });
         }).catch((error) => {

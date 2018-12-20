@@ -1,3 +1,5 @@
+import lodash from 'lodash';
+import cache from './cache';
 // 日期格式化
 const timeFormat = (timestamp) => {
     // return new Date(timestamp * 1000).toISOString().replace(/[a-zA-Z]/g, ' ').slice(0, -5);
@@ -47,5 +49,6 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
 
 export default {
     arrayToTree,
+    cache,
     timeFormat: timeFormat,
 };

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
+import {Link} from '@symph/joy/router';
 import NekoModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
 import articleStyles from '../../common/styles/article/articlelist.less';
@@ -48,10 +49,12 @@ export default class ArticleList extends Component {
                                     <div className="article-imageWrapper" />
                                     <p className={articleStyles.articleTitle}>{ar.title}</p>
                                     <div className={articleStyles.articleAux}>
-                                        {/*<span className={articleStyles.articleDate}>修改于 {utils.default.timeFormat(parseInt(ar.modifiedAt, 10))}</span>*/}
+                                        {/*<span className={articleStyles.articleDate}>修改于 {utils.timeFormat(parseInt(ar.modifiedAt, 10))}</span>*/}
                                         <span className={articleStyles.articleDate}>分类: {ar.category} | Tokei 发布于 {utils.timeFormat(parseInt(ar.createdAt, 10))}</span>
                                         <span className={articleStyles.articleComment}>共有 {ar.comment ? ar.comment : "0"} 条评论</span>
-                                        <a to={`/post/${ar.id}`} className={articleStyles.moreBtn}> <i className={"demo-icon icon-star"} /> Read more</a>
+                                        <Link to={`/post/${ar.id}`} className={articleStyles.moreBtn}>
+                                            <i className={"demo-icon icon-star"} /> Read more
+                                        </Link>
                                     </div>
                                 </article>
                             )

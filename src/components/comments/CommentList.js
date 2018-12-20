@@ -14,7 +14,7 @@ function renderComment(cm) {
             <div className={commentStyles.commentBodyMain}>
                 <div className={commentStyles.commentBodyHead}>
                     <span className={commentStyles.commentAuthorName}>{cm.author}</span>
-                    <span className={commentStyles.commentAuthorDate}>{utils.default.timeFormat(parseInt(cm.modifiedAt, 10))}</span>
+                    <span className={commentStyles.commentAuthorDate}>{utils.timeFormat(parseInt(cm.modifiedAt, 10))}</span>
                 </div>
                 <div className="comment-body-main-content">
                     <p dangerouslySetInnerHTML={{
@@ -54,20 +54,21 @@ function submitComment(data, dispatch, pid, e) {
     } else {
         data.body = check(data.body);
         data.prid = "0";
-        data.ip = utils.default.cache.get();
+        data.ip = utils.cache.get();
         data.url = data.mail;
         data.pid = pid;
         delete data.code;
-        dispatch({ type: "comments/submitComment", payload: data}).then(() => {
-            data = {};
-            let inputs = e.target.parentElement.parentElement.querySelectorAll("input");
-            let tinput = e.target.parentElement.parentElement.querySelectorAll("textarea");
-            inputs.forEach(input => {
-                input.value = '';
-            });
-            tinput[0].value = '';
-            dispatch({ type: "comments/fetchComments", payload: pid});
-        });
+        console.log(data, 'to backend');
+        // dispatch({ type: "comments/submitComment", payload: data}).then(() => {
+        //     data = {};
+        //     let inputs = e.target.parentElement.parentElement.querySelectorAll("input");
+        //     let tinput = e.target.parentElement.parentElement.querySelectorAll("textarea");
+        //     inputs.forEach(input => {
+        //         input.value = '';
+        //     });
+        //     tinput[0].value = '';
+        //     dispatch({ type: "comments/fetchComments", payload: pid});
+        // });
     }
 }
 
@@ -94,10 +95,24 @@ export default class CommentList extends Component {
             url: "460512944@qq.com",
         }
     ];
+
+    comment = {
+        author: '',
+        mail: '',
+        code: '',
+        body: ''
+    };
+
     render() {
-        const data = this.data;
-        const comment = this.data[0];
-        const renderData = [];
+        const data = this.props.data;
+        let renderData;
+
+        if (data && data.length) {
+            renderData = utils.arrayToTree(data, 'pid', 'prid');
+        } else {
+            renderData = undefined
+        }
+
         return (
             <>
                 <div className={commentStyles.container}>
@@ -112,17 +127,27 @@ export default class CommentList extends Component {
                             </div>
                             <div className={commentStyles.commentBox}>
                                 <div className={commentStyles.textAreaContainer}>
-                                    <input type="text" placeholder="*昵称" title="昵称"  maxLength="30" defaultValue={comment.author} required  onChange={(e) => {assignData(comment, 'author', e)}} />
-                                    <input type="text" placeholder="*网站/邮箱" title="网站/邮箱" defaultValue={comment.mail}  maxLength="30" required  onChange={(e) => {assignData(comment, 'mail', e)}} />
-                                    <input type="text" placeholder="*验证码为kasumi" title="验证码" defaultValue={comment.code}  maxLength="30" required  onChange={(e) => {assignData(comment, 'code', e)}} />
+                                    <input type="text" placeholder="*昵称" title="昵称"
+                                           maxLength="30"
+                                           defaultValue={this.comment.author}
+                                           required
+                                           onChange={(e) => {assignData(this.comment, 'author', e)}} />
+                                    <input type="text" placeholder="*网站/邮箱" title="网站/邮箱"
+                                           defaultValue={this.comment.mail}
+                                           maxLength="30" required
+                                           onChange={(e) => {assignData(this.comment, 'mail', e)}} />
+                                    <input type="text" placeholder="*验证码为kasumi" title="验证码"
+                                           defaultValue={this.comment.code}
+                                           maxLength="30" required
+                                           onChange={(e) => {assignData(this.comment, 'code', e)}} />
                                     <textarea id="textarea" rows="1" autoComplete="off" maxLength="1000" required
-                                              placeholder="*在这里评论"  defaultValue={comment.body}
+                                              placeholder="*在这里评论"  defaultValue={this.comment.body}
                                               onFocusCapture={(e) => {console.log('focus captured')}}
-                                              onChange={(e) => {assignData(comment, 'body', e)}} />
+                                              onChange={(e) => {assignData(this.comment, 'body', e)}} />
                                 </div>
                                 <div className={commentStyles.textAreaReplyBtns}>
                                     <button className={commentStyles.commentBtn} title="提交评论/Submit" onClick={(e) => {
-                                        submitComment(comment, dispatch, pid, e);
+                                        submitComment(this.comment, this.props.dispatch, this.props.pid, e);
                                     }}>提交评论</button>
                                 </div>
                             </div>

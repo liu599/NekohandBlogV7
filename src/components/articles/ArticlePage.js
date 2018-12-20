@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
+import {Link} from '@symph/joy/router';
 import NekoModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
 import articleStyles from '../../common/styles/article/articlelist.less';
@@ -10,11 +11,25 @@ import Comments from '../comments';
 @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
-        model: state.model // bind model's state to props
+        model: state.nekoblog // bind model's state to props
     }
 })
 
 export default class ArticlePage extends Component {
+
+    async componentPrepare() {
+
+        let {dispatch} = this.props;
+        // call model's effect method
+        await dispatch({
+            type: 'nekoblog/fetchComments',
+            id: this.props.location.pathname.split('/')[2]
+        });
+        await  dispatch({
+            type: 'nekoblog/fetchPost',
+            id: this.props.location.pathname.split('/')[2]
+        })
+    }
 
     data = {
             author: "5bc4cf825c964c0d20c5bff3",
@@ -35,6 +50,8 @@ export default class ArticlePage extends Component {
     };
 
     render() {
+        let data = this.props.model.currentComments;
+        this.data = this.props.model.post;
         return (
             <div>
                 <article className={articleStyles.articleContainer}
@@ -45,7 +62,7 @@ export default class ArticlePage extends Component {
                     <div className={articleStyles.articleAux}>
                         <span className={articleStyles.articleDate}>Tokei 发布于 {utils.timeFormat(this.data.createdAt)}</span>
                         <span className={articleStyles.articleComment}>共有 {this.data.comment ? this.data.comment : "0"} 条评论</span>
-                        <span>Categories: {this.data.category} | <a onClick={() => {console.log(2);}}>
+                        <span>Categories: {this.data.category} | <a onClick={() => {this.props.history.goBack();}}>
                             <i className={"demo-icon  icon-left-open"} />点此返回</a>
                         </span>
                     </div>
@@ -54,7 +71,7 @@ export default class ArticlePage extends Component {
                     />
                 </article>
                 <div className="nh-comments">
-                    <Comments.CommentList />
+                    <Comments.CommentList data={data} pid={this.props.location.pathname.split('/')[2]} />
                 </div>
             </div>
         );

@@ -46,9 +46,11 @@ export async function postsFetchByCategory({cid, ...data}) {
 }
 
 export async function postFetch(id) {
-    return  request({
-        url: `${configs.genUrl(configs.frontend, configs.modules.frontend.post)}/${id}`,
-        method: 'post-form-without-token',
+    return  fetch(`${configs.genUrl(configs.frontend, configs.modules.frontend.post)}/${id}`,
+    {
+        body: null,
+        method: 'POST',
+        mode: 'cors'
     })
 }
 
