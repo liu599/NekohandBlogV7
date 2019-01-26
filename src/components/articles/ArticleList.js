@@ -6,6 +6,15 @@ import controller, {requireModel} from '@symph/joy/controller';
 import articleStyles from '../../common/styles/article/articlelist.less';
 import utils from '../../utils'
 
+const genTitle = (keyword) => {
+    switch (keyword) {
+        case 'timeline':
+            return ' | 时间轴';
+        default:
+            return ' | 文章列表';
+    }
+};
+
 @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
@@ -35,11 +44,34 @@ export default class ArticleList extends Component {
         }
     ];
 
+    path = '';
+
+    async componentPrepare() {
+        let {dispatch} = this.props;
+        // call model's effect method
+        await dispatch({
+            type: 'nekoblog/fetchPostList',
+            data: {
+                pageNumber: 1,
+                pageSize: 20,
+            }
+        });
+    }
+
     render() {
+
+        if (!this.props.model.posts || this.props.model.posts.length === 0) {
+            return (
+                <article className={articleStyles.articleContainer}>
+                    <h1>暂时还没有文章....</h1>
+                </article>
+            )
+        }
+
         return (
             <>
                 <Head>
-                    <title>Article Title</title>
+                    <title>Nekohand Blog {genTitle(this.path[1])} </title>
                 </Head>
                 <div>
                     {
@@ -47,14 +79,18 @@ export default class ArticleList extends Component {
                             return (
                                 <article className={articleStyles.articleContainer} key={`${index}-arr`}>
                                     <div className="article-imageWrapper" />
-                                    <p className={articleStyles.articleTitle}>{ar.title}</p>
+                                    <p className={articleStyles.articleTitle}>
+                                        <Link to={`/post/${ar.id}`}>
+                                            <i className={"demo-icon icon-star"} /> {ar.title}
+                                        </Link>
+                                    </p>
                                     <div className={articleStyles.articleAux}>
                                         {/*<span className={articleStyles.articleDate}>修改于 {utils.timeFormat(parseInt(ar.modifiedAt, 10))}</span>*/}
                                         <span className={articleStyles.articleDate}>分类: {ar.category} | Tokei 发布于 {utils.timeFormat(parseInt(ar.createdAt, 10))}</span>
                                         <span className={articleStyles.articleComment}>共有 {ar.comment ? ar.comment : "0"} 条评论</span>
-                                        <Link to={`/post/${ar.id}`} className={articleStyles.moreBtn}>
-                                            <i className={"demo-icon icon-star"} /> Read more
-                                        </Link>
+                                        {/*<Link to={`/post/${ar.id}`} className={articleStyles.moreBtn}>*/}
+                                            {/*<i className={"demo-icon icon-star"} /> Read more*/}
+                                        {/*</Link>*/}
                                     </div>
                                 </article>
                             )

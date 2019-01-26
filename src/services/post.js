@@ -45,6 +45,14 @@ export async function postsFetchByCategory({cid, ...data}) {
     })
 }
 
+export async function postsFetchByTime(data) {
+    return  request({
+        url: `${configs.genUrl(configs.frontend, configs.modules.frontend.postByTime)}`,
+        method: 'post-form-without-token',
+        data
+    })
+}
+
 export async function postFetch(id) {
     return  fetch(`${configs.genUrl(configs.frontend, configs.modules.frontend.post)}/${id}`,
     {

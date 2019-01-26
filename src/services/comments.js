@@ -1,4 +1,5 @@
-import fetch from '@symph/joy/fetch'
+import fetch from '@symph/joy/fetch';
+import request from '../utils/request';
 import configs from './config';
 
 export async function commentsFetch(coid) {
@@ -16,6 +17,7 @@ export async function commentsFetch(coid) {
 }
 
 export async function commentSubmit(data) {
+    console.log('start submit comment');
     return  request({
         url: `${configs.genUrl(configs.frontend, configs.modules.frontend.commentCreation)}`,
         method: 'post',

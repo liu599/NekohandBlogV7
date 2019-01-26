@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Head from '@symph/joy/head';
-import {Link} from '@symph/joy/router';
+import {routerRedux} from '@symph/joy/router'
 import NekoModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
 import articleStyles from '../../common/styles/article/articlelist.less';
@@ -18,7 +18,6 @@ import Comments from '../comments';
 export default class ArticlePage extends Component {
 
     async componentPrepare() {
-
         let {dispatch} = this.props;
         // call model's effect method
         await dispatch({
@@ -32,20 +31,20 @@ export default class ArticlePage extends Component {
     }
 
     data = {
-            author: "5bc4cf825c964c0d20c5bff3",
+            author: "5b",
             category: "前端开发",
-            cid: "5bcafcac421aa96bb3b9b788",
+            cid: "5bcafca",
             comment: 0,
             createdAt: 1543427777,
-            id: "5bfed6c4421aa92dac0d68d1",
+            id: "5bfed6c",
             modifiedAt: 1543427931,
             password: "******",
             pid: 25,
             plink: "",
-            slug: "FEND, 动态加载",
+            slug: "离线文件",
             status: "",
             template: 0,
-            title: "使用动态引入组件功能解决富文本编辑器加载问题",
+            title: "离线状态",
             body: 'ajdkflajsdf'
     };
 
@@ -53,7 +52,11 @@ export default class ArticlePage extends Component {
         let data = this.props.model.currentComments;
         this.data = this.props.model.post;
         return (
+
             <div>
+                <Head>
+                    <title>{this.data.title}</title>
+                </Head>
                 <article className={articleStyles.articleContainer}
                          style={{marginBottom: 1 + 'em', boxShadow: 'unset'}}
                 >
@@ -62,7 +65,7 @@ export default class ArticlePage extends Component {
                     <div className={articleStyles.articleAux}>
                         <span className={articleStyles.articleDate}>Tokei 发布于 {utils.timeFormat(this.data.createdAt)}</span>
                         <span className={articleStyles.articleComment}>共有 {this.data.comment ? this.data.comment : "0"} 条评论</span>
-                        <span>Categories: {this.data.category} | <a onClick={() => {this.props.history.goBack();}}>
+                        <span>Categories: {this.data.category} | <a onClick={() => {this.props.dispatch(routerRedux.push('/'));}}>
                             <i className={"demo-icon  icon-left-open"} />点此返回</a>
                         </span>
                     </div>

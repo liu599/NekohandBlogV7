@@ -1,9 +1,24 @@
 import model from '@symph/joy/model';
 import dynamic from "@symph/joy/dynamic";
-import {getServerInfo, postsFetch, postFetch} from '../services/post'
-import {categoriesFetch, chronologyFetch} from '../services/categories'
-import {FavoritesFetch, FriendsFetch} from '../services/others'
-import {commentsFetch, commentSubmit} from "../services/comments";
+import {
+    getServerInfo,
+    postsFetch,
+    postsFetchByCategory,
+    postsFetchByTime,
+    postFetch
+} from '../services/post'
+import {
+    categoriesFetch,
+    chronologyFetch
+} from '../services/categories'
+import {
+    FavoritesFetch,
+    FriendsFetch
+} from '../services/others'
+import {
+    commentsFetch,
+    commentSubmit
+} from "../services/comments";
 import utils from '../utils';
 import React from "react";
 
@@ -113,13 +128,37 @@ export default class AppModel {
         })
     }
 
+    async fetchPostListByCategory({data}) {
+        let postData = await postsFetchByCategory(data);
+        // let postData = await postInfo.json();
+        let {posts} = this.getState();
+        this.setState({
+            posts: [
+                ...postData.data
+            ]
+        })
+    }
+
+    async fetchPostListByTime({data}) {
+        let postData = await postsFetchByTime(data);
+        // let postData = await postInfo.json();
+        let {posts} = this.getState();
+        this.setState({
+            posts: [
+                ...postData.data
+            ]
+        })
+    }
+
+
+
     async fetchCategories() {
         let response = await categoriesFetch();
         this.setState({
             categories: response.data
         });
-        console.log('response', response);
-        await new Promise(() => {utils.cache.set(response.headers["x-real-ip"]);})
+        utils.cache.set(response.headers["x-real-ip"]);
+        // console.log('response is', response.data);
     }
 
     async fetchChronology() {
@@ -147,18 +186,18 @@ export default class AppModel {
                 title: `${yr}年${mn}月`,
                 count: sed.split('(')[1].split(')')[0],
                 link: `/timeline/${sed.split('(')[0]}`,
-                query: `${new Date(yr, mn, 1).getTime() - 3600000 * 24 * 30}`
+                query: `${new Date(yr, mn, 0).getTime() - 3600000 * 24 * 30}`
             };
-            // console.log(chrono, 'adfasfa');
             chrono[index].data.push(cv);
         });
         this.setState({
-            chronology: chrono,
+            chronology: chrono.reverse(),
         })
     }
 
     async fetchFriendsInfo() {
         let response = await FriendsFetch();
+        // console.log('friend', response);
         this.setState({
             friendLinks: response.data.data
         })
@@ -166,18 +205,29 @@ export default class AppModel {
 
     async fetchFaviorites() {
         let response = await FavoritesFetch();
+        console.log('favorite', response);
         this.setState({
             favorites: response.data.data
         })
     }
 
     async fetchComments({id}) {
-        console.log('id', id);
         let response = await commentsFetch(id);
         let responseData = await response.json();
         this.setState({
             currentComments: responseData.data
         });
+    }
+
+    async submitComment({data}) {
+        let response = await commentSubmit(data);
+        if (response.success) {
+            response = await commentsFetch(data.pid);
+            let responseData = await response.json();
+            this.setState({
+                currentComments: responseData.data
+            });
+        }
     }
 
     async fetchPost({id}) {

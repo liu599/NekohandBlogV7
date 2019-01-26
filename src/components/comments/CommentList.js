@@ -43,35 +43,6 @@ function check(val) {
     // return val.replace(/<[^>]+>|&[^>]+;/g,"").trim();
 }
 
-function submitComment(data, dispatch, pid, e) {
-    e.persist();
-    if (check(data.body) === '' || check(data.author) === '' || check(data.mail) === '') {
-        alert('请填入必填项目');
-        return;
-    }
-    if (data.code !== 'kasumi') {
-        alert('您是机器人嘛, 请在验证码中输入指定字符。');
-    } else {
-        data.body = check(data.body);
-        data.prid = "0";
-        data.ip = utils.cache.get();
-        data.url = data.mail;
-        data.pid = pid;
-        delete data.code;
-        console.log(data, 'to backend');
-        // dispatch({ type: "comments/submitComment", payload: data}).then(() => {
-        //     data = {};
-        //     let inputs = e.target.parentElement.parentElement.querySelectorAll("input");
-        //     let tinput = e.target.parentElement.parentElement.querySelectorAll("textarea");
-        //     inputs.forEach(input => {
-        //         input.value = '';
-        //     });
-        //     tinput[0].value = '';
-        //     dispatch({ type: "comments/fetchComments", payload: pid});
-        // });
-    }
-}
-
 @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
@@ -101,6 +72,42 @@ export default class CommentList extends Component {
         mail: '',
         code: '',
         body: ''
+    };
+
+    submitComment = (data, pid, e) => {
+        e.persist();
+        if (check(data.body) === '' || check(data.author) === '' || check(data.mail) === '') {
+            alert('请填入必填项目');
+            return;
+        }
+        if (data.code !== 'kasumi') {
+            alert('您是机器人嘛, 请在验证码中输入指定字符。');
+        } else {
+            data.body = check(data.body);
+            data.prid = "0";
+            data.ip = utils.cache.get();
+            data.url = data.mail;
+            data.pid = pid;
+            delete data.code;
+            console.log(data, 'to backend');
+            this.props.dispatch({
+                type: "nekoblog/submitComment",
+                data: data
+            });
+            //     .then(() => {
+            //     data = {};
+            //     let inputs = e.target.parentElement.parentElement.querySelectorAll("input");
+            //     let tinput = e.target.parentElement.parentElement.querySelectorAll("textarea");
+            //     inputs.forEach(input => {
+            //         input.value = '';
+            //     });
+            //     tinput[0].value = '';
+            //     dispatch({
+            //         type: "nekoblog/fetchComments",
+            //         id:  pid
+            //     });
+            // });
+        }
     };
 
     render() {
@@ -147,7 +154,7 @@ export default class CommentList extends Component {
                                 </div>
                                 <div className={commentStyles.textAreaReplyBtns}>
                                     <button className={commentStyles.commentBtn} title="提交评论/Submit" onClick={(e) => {
-                                        submitComment(this.comment, this.props.dispatch, this.props.pid, e);
+                                        this.submitComment(this.comment, this.props.pid, e);
                                     }}>提交评论</button>
                                 </div>
                             </div>

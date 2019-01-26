@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from '@symph/joy/router'
+import { Switch, Route, Redirect, Link } from '@symph/joy/router'
 import AppController from './controllers/AppController'
 import './common/styles/normalize.css';
 import './common/styles/nprogress.css';
@@ -32,13 +32,15 @@ export default class Main extends Component {
                             {
                                 dictChs.map((di, index) => (
                                     <li className={headerStyles.menuItem} key={index}>
-                                        <a href={{pathname: dictLink[index]}}
+                                        <Link to={{
+                                                pathname: dictLink[index]
+                                            }}
                                            target={dictLink[index].includes("http") ? "_blank" : ""}
                                            className={headerStyles.menuItemLink}
                                         >
                                             <span className={headerStyles.fontChs}>{di}</span>
                                             <span className={headerStyles.fontEn}>{dictEn[index]}</span>
-                                        </a>
+                                        </Link>
                                     </li>
                                 ))
                             }
@@ -46,13 +48,13 @@ export default class Main extends Component {
                     </nav>
                     <header className={headerStyles.nhHeader}>
                         <img className={"lazy"}
-                             src="http://bandori.nekohand.moe/nekofile/5bf962fe421aa941eefd50fe/"
+                             src="https://blog.nekohand.moe/static/bangdreampromote.354e8124.png"
                              alt="banner"
                         />
                         <div className={headerStyles.banner}>
                             <div className={headerStyles.bannerTxt}>
-                                <h1 className={headerStyles.siteTitle}>Welcome to Nekohand Blog</h1>
-                                <h3 className={headerStyles.siteSlogan}>ポジションゼロ</h3>
+                                {/*<h1 className={headerStyles.siteTitle}>Welcome to Nekohand Blog</h1>*/}
+                                {/*<h3 className={headerStyles.siteSlogan}>ポジションゼロ</h3>*/}
                             </div>
                         </div>
                     </header>
@@ -60,6 +62,8 @@ export default class Main extends Component {
                         <div className={bodyStyles.wrapper}>
                             <section className={bodyStyles.left}>
                                 <Switch>
+                                    <Route exact path="/category/:catname" component={ArticleComponents.ArticleList}/>
+                                    <Route exact path="/timeline/:time" component={ArticleComponents.ArticleList}/>
                                     <Route exact path="/post/:pid" component={ArticleComponents.ArticlePage}/>
                                     <Route exact path="/" component={ArticleComponents.ArticleList}/>
                                     <Route component={() => (<div>Waiting for the development..</div>)}/>
@@ -75,7 +79,7 @@ export default class Main extends Component {
                         <div className={footerStyles.footerInfo}>
                             <p>Copyrights © 2014-2018 Nekohand 公式サイト委員會<i className={"demo-icon icon-trademark"} />. </p>
                             <p>All Rights Reserved: Tokei. Thanks to <a href={`https://umijs.org/`} target={`_blank`} title={`A Pluggable enterprise-level react application framework`}>UmiJs</a> and <a href={`https://lnlfps.github.io/symph-joy`} target={`_blank`} title={`Minimalistic framework for React applications, inspiration comes from Next.js and Dva`} >symph-joy</a>.</p>
-                            <p>Current Version: 7.0.0 Kasumi
+                            <p>Current Version: 7.1.0 Kasumi-SymphJoy
                                 <a href="https://tae.nekohand.moe" target={`_blank`} className="author_name" title={`文章管理`}>
                                     <i className={"demo-icon icon-star"} />
                                 </a>.</p>
