@@ -4,7 +4,7 @@ const withImageLoader = require('@symph/joy-image')
 const path = require('path')
 
 module.exports = {
-    serverRender: false,
+    serverRender: true,
     assetPrefix: '',
     plugins: [
         withImageLoader({

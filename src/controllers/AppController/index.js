@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Head from '@symph/joy/head';
 import {requireModel} from "@symph/joy/controller";
 import NekoModel from "../../models/model";
 import controller from "@symph/joy/controller";

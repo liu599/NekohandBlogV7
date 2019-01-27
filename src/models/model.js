@@ -19,7 +19,7 @@ import {
     commentsFetch,
     commentSubmit
 } from "../services/comments";
-import utils from '../utils';
+// import utils from '../utils';
 import React from "react";
 
 
@@ -30,6 +30,7 @@ export default class AppModel {
     initState = {
         status: {},
         user: '',
+        ip: '',
         token: '',
         loading: false,
         chronology: [
@@ -168,9 +169,10 @@ export default class AppModel {
     async fetchCategories() {
         let response = await categoriesFetch();
         this.setState({
-            categories: response.data
+            categories: response.data,
+            ip: response.headers["x-real-ip"],
         });
-        utils.cache.set(response.headers["x-real-ip"]);
+        // utils.cache.set(response.headers["x-real-ip"]);
         // console.log('response is', response.data);
     }
 

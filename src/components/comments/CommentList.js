@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import Head from '@symph/joy/head';
 import NekoModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
 import commentStyles from '../../common/styles/comment/commentlist.less';
-import utils from '../../utils'
 
 function renderComment(cm) {
     return (
@@ -46,7 +44,7 @@ function check(val) {
 @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
-        model: state.model // bind model's state to props
+        model: state.nekoblog // bind model's state to props
     }
 })
 
@@ -85,7 +83,7 @@ export default class CommentList extends Component {
         } else {
             data.body = check(data.body);
             data.prid = "0";
-            data.ip = utils.cache.get();
+            data.ip = this.props.model.ip;
             data.url = data.mail;
             data.pid = pid;
             delete data.code;
