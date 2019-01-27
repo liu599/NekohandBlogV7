@@ -14,12 +14,12 @@ import controller from "@symph/joy/controller";
 
 class AppController extends Component {
 
-    constructor () {
-        super(...arguments);
-        this.state = {
-            isLoading: false
-        }
-    }
+    // constructor () {
+    //     super(...arguments);
+    //     this.state = {
+    //         isLoading: false
+    //     }
+    // }
 
     async componentDidUpdate(prevProps) {
         let {dispatch} = this.props;
@@ -45,13 +45,22 @@ class AppController extends Component {
                     },
                 });
             }
+            if (this.props.location.pathname === '/') {
+                await dispatch({
+                    type: 'nekoblog/fetchPostList',
+                    data: {
+                        pageNumber: 1,
+                        pageSize: 20,
+                    }
+                });
+            }
         }
     }
 
     render() {
         return (
             <React.Fragment>
-                {this.props.children}
+                { this.props.children }
             </React.Fragment>
         );
     }

@@ -7,7 +7,8 @@ import './common/styles/main.less';
 import headerStyles from './common/styles/header.less';
 import footerStyles from './common/styles/footer.less';
 import bodyStyles from './common/styles/body.less';
-import Widgets from './components/widgets'
+import Widgets from './components/widgets';
+import Lazyimg, { withLazyimg } from 'react-lazyimg-component';
 import ArticleComponents from './components/articles'
 
 const Author = Widgets.Author;
@@ -47,7 +48,7 @@ export default class Main extends Component {
                         </ul>
                     </nav>
                     <header className={headerStyles.nhHeader}>
-                        <img className={"lazy"}
+                        <Lazyimg className={"lazy"}
                              src="https://blog.nekohand.moe/static/bangdreampromote.354e8124.png"
                              alt="banner"
                         />

@@ -31,6 +31,7 @@ export default class AppModel {
         status: {},
         user: '',
         token: '',
+        loading: false,
         chronology: [
             {
                 title: '2018',
@@ -117,6 +118,9 @@ export default class AppModel {
     }
 
     async fetchPostList({data}) {
+        this.setState({
+            loading: true,
+        });
         let postData = await postsFetch(data);
         // let postData = await postInfo.json();
         let {posts} = this.getState();
@@ -124,29 +128,38 @@ export default class AppModel {
             posts: [
                 ...posts,
                 ...postData.data
-            ]
+            ],
+            loading: false,
         })
     }
 
     async fetchPostListByCategory({data}) {
+        this.setState({
+            loading: true,
+        });
         let postData = await postsFetchByCategory(data);
         // let postData = await postInfo.json();
         let {posts} = this.getState();
         this.setState({
             posts: [
                 ...postData.data
-            ]
+            ],
+            loading: false,
         })
     }
 
     async fetchPostListByTime({data}) {
+        this.setState({
+            loading: true,
+        });
         let postData = await postsFetchByTime(data);
         // let postData = await postInfo.json();
         let {posts} = this.getState();
         this.setState({
             posts: [
                 ...postData.data
-            ]
+            ],
+            loading: false,
         })
     }
 

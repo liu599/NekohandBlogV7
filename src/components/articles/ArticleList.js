@@ -4,6 +4,7 @@ import {Link} from '@symph/joy/router';
 import NekoModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
 import articleStyles from '../../common/styles/article/articlelist.less';
+import Loading from '../../components/loading';
 import utils from '../../utils'
 
 const genTitle = (keyword) => {
@@ -18,7 +19,7 @@ const genTitle = (keyword) => {
 @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
-        model: state.nekoblog // bind model's state to props
+        model: state.nekoblog, // bind model's state to props
     }
 })
 
@@ -44,8 +45,8 @@ export default class ArticleList extends Component {
         }
     ];
 
-    path = '';
-
+    // path = '';
+    //
     async componentPrepare() {
         let {dispatch} = this.props;
         // call model's effect method
@@ -60,9 +61,16 @@ export default class ArticleList extends Component {
 
     render() {
 
+        if (this.props.model.loading) {
+            return (
+                <Loading.Loading />
+            )
+        }
+
         if (!this.props.model.posts || this.props.model.posts.length === 0) {
             return (
                 <article className={articleStyles.articleContainer}>
+
                     <h1>暂时还没有文章....</h1>
                 </article>
             )
@@ -71,7 +79,7 @@ export default class ArticleList extends Component {
         return (
             <>
                 <Head>
-                    <title>Nekohand Blog {genTitle(this.path[1])} </title>
+                    <title>Nekohand Blog </title>
                 </Head>
                 <div>
                     {
