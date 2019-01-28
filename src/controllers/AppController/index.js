@@ -44,6 +44,12 @@ class AppController extends Component {
                     },
                 });
             }
+            if (this.props.location.pathname.includes('post')) {
+                await dispatch({
+                    type: 'nekoblog/fetchPost',
+                    id: this.props.location.pathname.split('/')[2]
+                });
+            }
             if (this.props.location.pathname === '/') {
                 await dispatch({
                     type: 'nekoblog/fetchPostList',

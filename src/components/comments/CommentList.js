@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NekoModel from '../../models/model';
 import controller, {requireModel} from '@symph/joy/controller';
+import utils from '../../utils'
 import commentStyles from '../../common/styles/comment/commentlist.less';
 
 function renderComment(cm) {
