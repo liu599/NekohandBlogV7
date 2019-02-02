@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NekoModel from '../../models/model';
-import controller, {requireModel} from '@symph/joy/controller';
+import controller from '@symph/joy/controller';
+import {autowire} from '@symph/joy/autowire';
 import utils from '../../utils'
 import commentStyles from '../../common/styles/comment/commentlist.less';
 
@@ -42,7 +43,7 @@ function check(val) {
     // return val.replace(/<[^>]+>|&[^>]+;/g,"").trim();
 }
 
-@requireModel(NekoModel)          // register model
+// @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
         model: state.nekoblog // bind model's state to props
@@ -50,6 +51,10 @@ function check(val) {
 })
 
 export default class CommentList extends Component {
+
+    @autowire()
+    nekoModel: NekoModel
+    
     data = [
         {
             author: "Tokei",

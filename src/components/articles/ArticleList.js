@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import {Link} from '@symph/joy/router';
 import NekoModel from '../../models/model';
-import controller, {requireModel} from '@symph/joy/controller';
+import controller from '@symph/joy/controller';
+import {autowire} from '@symph/joy/autowire';
 import articleStyles from '../../common/styles/article/articlelist.less';
 import Loading from '../../components/loading';
 import utils from '../../utils'
@@ -16,7 +17,7 @@ const genTitle = (keyword) => {
     }
 };
 
-@requireModel(NekoModel)          // register model
+// @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
         model: state.nekoblog, // bind model's state to props
@@ -24,6 +25,9 @@ const genTitle = (keyword) => {
 })
 
 export default class ArticleList extends Component {
+
+    @autowire()
+    nekoModel: NekoModel
 
     data = [
         {

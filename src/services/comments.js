@@ -17,7 +17,7 @@ export async function commentsFetch(coid) {
 }
 
 export async function commentSubmit(data) {
-    console.log('start submit comment');
+    // console.log('start submit comment');
     return  request({
         url: `${configs.genUrl(configs.frontend, configs.modules.frontend.commentCreation)}`,
         method: 'post',

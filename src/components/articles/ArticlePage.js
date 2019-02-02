@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import Head from '@symph/joy/head';
 import {routerRedux} from '@symph/joy/router'
 import NekoModel from '../../models/model';
-import controller, {requireModel} from '@symph/joy/controller';
+import {autowire} from '@symph/joy/autowire';
+import controller from '@symph/joy/controller';
 import articleStyles from '../../common/styles/article/articlelist.less';
 import articlePageStyles from '../../common/styles/article/articlepage.less';
 import utils from '../../utils'
 import Comments from '../comments';
 import Loading from '../../components/loading';
 
-@requireModel(NekoModel)          // register model
+// @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
         model: state.nekoblog // bind model's state to props
@@ -18,6 +19,9 @@ import Loading from '../../components/loading';
 
 export default class ArticlePage extends Component {
 
+    @autowire()
+    nekoModel: NekoModel
+    
     async componentPrepare() {
         let {dispatch} = this.props;
         // call model's effect method

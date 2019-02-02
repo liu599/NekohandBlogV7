@@ -12,7 +12,7 @@
     "export": "npm run build && joy export"
   },
   "dependencies": {
-    "@symph/joy": "^0.5.0",
+    "@symph/joy": "^1.0.0",
     "@symph/joy-css": "latest",
     "@symph/joy-image": "^0.4.1",
     "@symph/joy-less": "latest",

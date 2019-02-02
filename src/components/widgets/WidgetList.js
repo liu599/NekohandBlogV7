@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
 import NekoModel from '../../models/model';
 import { Link } from '@symph/joy/router';
-import controller, {requireModel} from '@symph/joy/controller';
+import {autowire} from '@symph/joy/autowire';
+import controller from '@symph/joy/controller';
 import ListWidgetStyles from '../../common/styles/widgets/listwidget.less';
 
-@requireModel(NekoModel)          // register model
+const isExternalLink = (linkString) => {
+    return linkString && linkString.includes('http')
+}
+
+// @requireModel(NekoModel)          // register model
 @controller((state) => {              // state is store's state
     return {
         model: state.nekoblog // bind model's state to props
     }
 })
 export default class WidgetList extends Component {
+
+    @autowire()
+    nekoModel: NekoModel
 
     async componentPrepare() {
         let {dispatch} = this.props;
@@ -27,13 +35,13 @@ export default class WidgetList extends Component {
 
     render() {
         let data = [{
-            title: "文章分类",
+            title: "分类 Categories",
             data: this.props.model.categories
         }, {
-            title: "文章归档",
+            title: "归档 Archive",
             data: this.props.model.chronology
         }, {
-            title: "友情链接",
+            title: "链接 Links",
             data: this.props.model.friendLinks
         }];
 
@@ -60,17 +68,29 @@ export default class WidgetList extends Component {
                                                                 sd.data && sd.data.map((si, ind) => {
                                                                     return (
                                                                         <li key={`${ind}-es`}>
-                                                                            <Link to={{
-                                                                                pathname: si.link,
-                                                                                query: {
-                                                                                    t: si.query ? si.query : ''
-                                                                                }
-                                                                            }} title={si.htitle} target={si.link && si.link.includes('http') ? '_blank' : ''}>
-                                                                                {si.title}{si.count ? `(${si.count})`: ``}
-                                                                            </Link>
+                                                                            {
+                                                                                isExternalLink(si.link)
+                                                                                    ?
+                                                                                    (<a
+                                                                                        href={si.link}
+                                                                                        title={si.htitle}
+                                                                                        target='_blank'>
+                                                                                        {si.title}
+                                                                                    </a>)
+                                                                                    :
+                                                                                    (<Link 
+                                                                                        to={{
+                                                                                                pathname: si.link,
+                                                                                                query: {
+                                                                                                    t: si.query ? si.query : ''
+                                                                                                }
+                                                                                            }}
+                                                                                        title={si.htitle}>
+                                                                                        {si.title}{si.count ? `(${si.count})` : ``}
+                                                                                    </Link>)
+                                                                            }
                                                                         </li>
-                                                                    )
-                                                                })
+                                                                    )})
                                                             }
                                                         </ul>
                                                     </div>
@@ -90,7 +110,6 @@ export default class WidgetList extends Component {
                                                     </li>
                                                 )
                                             }
-
                                         })
                                     }
                                 </div>

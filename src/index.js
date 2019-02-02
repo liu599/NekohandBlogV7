@@ -7,12 +7,16 @@ import './common/styles/main.less';
 import headerStyles from './common/styles/header.less';
 import footerStyles from './common/styles/footer.less';
 import bodyStyles from './common/styles/body.less';
-import Widgets from './components/widgets';
+import Author from './components/widgets/Author';
 // import Lazyimg, { withLazyimg } from 'react-lazyimg-component';
-import ArticleComponents from './components/articles'
+import ArticleComponents from './components/articles';
+import dynamic from '@symph/joy/dynamic';
 
-const Author = Widgets.Author;
-const WidgetList = Widgets.WidgetList;
+const DynamicComponent = dynamic({
+    loader: () => import('./components/widgets/WidgetList'),
+    ssr: true,
+    loading:() => <div>Loading....</div>
+})
 const dictChs = ['首页', '关于', '应用'];
 const dictEn = ['HOME', 'ABOUT', 'APP'];
 const dictLink = ['/', '/post/5b72f09a5c964c32f078402c', 'https://apps.nekohand.moe/'];
@@ -72,7 +76,7 @@ export default class Main extends Component {
                             </section>
                             <section className={bodyStyles.right}>
                                 <Author />
-                                <WidgetList />
+                                <DynamicComponent />
                             </section>
                         </div>
                     </main>
