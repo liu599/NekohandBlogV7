@@ -97,8 +97,8 @@ export default class ArticleList extends Component {
                                         </Link>
                                     </p>
                                     <div className={articleStyles.articleAux}>
-                                        {/*<span className={articleStyles.articleDate}>修改于 {utils.timeFormat(parseInt(ar.modifiedAt, 10))}</span>*/}
-                                        <span className={articleStyles.articleDate}>分类: {ar.category} | Tokei 发布于 {utils.timeFormat(parseInt(ar.createdAt, 10))}</span>
+                                        {/*<span className={articleStyles.articleDate}>修改于 {utils.timeFormat(parseInt(ar.modifiedAt, 10))} | 分类: {ar.category} |</span>*/}
+                                        <span className={articleStyles.articleDate}> Tokei 发布于 {utils.timeFormat(parseInt(ar.createdAt, 10))} | </span>
                                         <span className={articleStyles.articleComment}>共有 {ar.comment ? ar.comment : "0"} 条评论</span>
                                         {/*<Link to={`/post/${ar.id}`} className={articleStyles.moreBtn}>*/}
                                             {/*<i className={"demo-icon icon-star"} /> Read more*/}

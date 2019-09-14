@@ -78,9 +78,11 @@ export default class ArticlePage extends Component {
                     <div className="article-imageWrapper" />
                     <h2 className={articleStyles.articleTitle}>{this.props.model.post.title}</h2>
                     <div className={articleStyles.articleAux}>
-                        <span className={articleStyles.articleDate}>Tokei 发布于 {utils.timeFormat(this.props.model.post.createdAt)}</span>
+                        <span className={articleStyles.articleDate}>分类: {this.props.model.post.category} |</span>
+                        <span className={articleStyles.articleDate}>发布时间: {utils.timeFormat(this.props.model.post.createdAt)} |</span>
+                        <span className={articleStyles.articleDate}>修改时间: {utils.timeFormat(this.props.model.post.modifiedAt)} |</span>
                         <span className={articleStyles.articleComment}>共有 {this.props.model.post.comment ? this.props.model.post.comment : "0"} 条评论</span>
-                        <span>Categories: {this.props.model.post.category} | <a onClick={() => {this.props.dispatch(routerRedux.push('/'));}}>
+                        <span style={{color: "red"}}> <a onClick={() => {this.props.dispatch(routerRedux.push('/'));}}>
                             <i className={"demo-icon  icon-left-open"} />点此返回</a>
                         </span>
                     </div>

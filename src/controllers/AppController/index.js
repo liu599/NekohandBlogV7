@@ -21,7 +21,7 @@ class AppController extends Component {
     //     }
     // }
     @autowire()
-    nekoModel: NekoModel
+    nekoModel: NekoModel;
 
     async componentDidUpdate(prevProps) {
         let {dispatch} = this.props;

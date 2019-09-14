@@ -200,14 +200,16 @@ export default class AppModel {
             let mn = sed.substring(4, 6);
             // console.log(mn)
             // new Date(2018, 12, 1) => 实际上是2019.1 差一个月
+            //console.log('month', mn);
             let cv = {
                 title: `${yr}年${mn}月`,
                 count: sed.split('(')[1].split(')')[0],
                 link: `/timeline/${sed.split('(')[0]}`,
-                query: `${new Date(yr, mn, 0).getTime() - 3600000 * 24 * 30}`
+                query: `${new Date(yr, parseInt(mn, 10) - 1, 1).getTime()}`
             };
-            chrono[index].data.push(cv);
+            chrono[index].data.unshift(cv);
         });
+        console.log('chrono', chrono);
         this.setState({
             chronology: chrono.reverse(),
         })

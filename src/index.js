@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect, Link } from '@symph/joy/router'
+import { Switch, Route, Link } from '@symph/joy/router'
 import AppController from './controllers/AppController'
 import './common/styles/normalize.css';
 import './common/styles/nprogress.css';
@@ -10,16 +10,28 @@ import bodyStyles from './common/styles/body.less';
 import Author from './components/widgets/Author';
 // import Lazyimg, { withLazyimg } from 'react-lazyimg-component';
 import ArticleComponents from './components/articles';
+import Loading from './components/loading';
 import dynamic from '@symph/joy/dynamic';
+import component404 from './_error.js';
 
 const DynamicComponent = dynamic({
     loader: () => import('./components/widgets/WidgetList'),
+    ssr: false,
+    loading:() => <Loading.Loading />
+});
+const DynamicList = dynamic({
+    loader: () => import('./components/articles/ArticleList'),
+    ssr: false,
+    loading:() => <Loading.Loading />
+});
+const DynamicPage = dynamic({
+    loader: () => import('./components/articles/ArticlePage'),
     ssr: true,
-    loading:() => <div>Loading....</div>
-})
-const dictChs = ['首页', '关于', '应用'];
-const dictEn = ['HOME', 'ABOUT', 'APP'];
-const dictLink = ['/', '/post/5b72f09a5c964c32f078402c', 'https://apps.nekohand.moe/'];
+    loading:() => <Loading.Loading />
+});
+const dictChs = ['首页', '关于'];
+const dictEn = ['HOME', 'ABOUT'];
+const dictLink = ['/', '/post/5b72f09a5c964c32f078402c'];
 
 export default class Main extends Component {
 
@@ -40,7 +52,7 @@ export default class Main extends Component {
                                         <Link to={{
                                                 pathname: dictLink[index]
                                             }}
-                                           target={dictLink[index].includes("http") ? "_blank" : ""}
+                                           target={dictLink[index] && dictLink[index].includes("http") ? "_blank" : ""}
                                            className={headerStyles.menuItemLink}
                                         >
                                             <span className={headerStyles.fontChs}>{di}</span>
@@ -49,6 +61,15 @@ export default class Main extends Component {
                                     </li>
                                 ))
                             }
+                            <li className={headerStyles.menuItem}>
+                                <a href={'https://apps.nekohand.moe/'}
+                                      target={'_blank'}
+                                      className={headerStyles.menuItemLink}
+                                >
+                                    <span className={headerStyles.fontChs}>应用</span>
+                                    <span className={headerStyles.fontEn}>APP</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                     <header className={headerStyles.nhHeader}>
@@ -67,11 +88,11 @@ export default class Main extends Component {
                         <div className={bodyStyles.wrapper}>
                             <section className={bodyStyles.left}>
                                 <Switch>
-                                    <Route exact path="/category/:catname" component={ArticleComponents.ArticleList}/>
-                                    <Route exact path="/timeline/:time" component={ArticleComponents.ArticleList}/>
-                                    <Route exact path="/post/:pid" component={ArticleComponents.ArticlePage}/>
-                                    <Route exact path="/" component={ArticleComponents.ArticleList}/>
-                                    <Route component={() => (<div>Waiting for the development..</div>)}/>
+                                    <Route exact path="/category/:catname" component={DynamicList}/>
+                                    <Route exact path="/timeline/:time" component={DynamicList}/>
+                                    <Route exact path="/post/:pid" component={DynamicPage}/>
+                                    <Route exact path="/" component={DynamicList}/>
+                                    <Route component={component404} />
                                 </Switch>
                             </section>
                             <section className={bodyStyles.right}>
@@ -82,9 +103,9 @@ export default class Main extends Component {
                     </main>
                     <footer className={footerStyles.footer}>
                         <div className={footerStyles.footerInfo}>
-                            <p>Copyrights © 2014-2018 Nekohand 公式サイト委員會<i className={"demo-icon icon-trademark"} />. </p>
-                            <p>All Rights Reserved: Tokei. Thanks to <a href={`https://umijs.org/`} target={`_blank`} title={`A Pluggable enterprise-level react application framework`}>UmiJs</a> and <a href={`https://lnlfps.github.io/symph-joy`} target={`_blank`} title={`Minimalistic framework for React applications, inspiration comes from Next.js and Dva`} >symph-joy</a>.</p>
-                            <p>Current Version: 7.1.0 Kasumi-SymphJoy
+                            <p>Copyrights © 2014-2019 Nekohand 公式サイト委員會<i className={"demo-icon icon-trademark"} />. </p>
+                            <p>All Rights Reserved: Tokei / eddie32.</p>
+                            <p>Version: 7.2.0 <a href={`https://lnlfps.github.io/symph-joy`} target={`_blank`} title={`Minimalistic framework for React applications, inspiration comes from Next.js and Dva`} >Kasumi-SymphJoy</a>
                                 <a href="https://tae.nekohand.moe" target={`_blank`} className="author_name" title={`文章管理`}>
                                     <i className={"demo-icon icon-star"} />
                                 </a>.</p>

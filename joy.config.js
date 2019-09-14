@@ -1,7 +1,7 @@
-const withCss = require('@symph/joy-css')
-const withLess = require('@symph/joy-less')
-const withImageLoader = require('@symph/joy-image')
-const path = require('path')
+const withCss = require('@symph/joy-css');
+const withLess = require('@symph/joy-less');
+const withImageLoader = require('@symph/joy-image');
+const path = require('path');
 
 module.exports = {
     serverRender: true,
