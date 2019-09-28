@@ -103,7 +103,7 @@ export default class Main extends Component {
                     </main>
                     <footer className={footerStyles.footer}>
                         <div className={footerStyles.footerInfo}>
-                            <p>Copyrights © 2014-2019 Nekohand 公式サイト委員會<i className={"demo-icon icon-trademark"} />. </p>
+                            <p>Copyrights © 2014-2019 Nekohand 公式サイト委員會<i style={{verticalAlign: 'super'}} className={"demo-icon icon-trademark"} />. </p>
                             <p>All Rights Reserved: Tokei / eddie32.</p>
                             <p>Version: 7.2.0 <a href={`https://lnlfps.github.io/symph-joy`} target={`_blank`} title={`Minimalistic framework for React applications, inspiration comes from Next.js and Dva`} >Kasumi-SymphJoy</a>
                                 <a href="https://tae.nekohand.moe" target={`_blank`} className="author_name" title={`文章管理`}>
