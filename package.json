@@ -12,11 +12,12 @@
     "export": "npm run build && joy export"
   },
   "dependencies": {
-    "@symph/joy": "^1.0.0",
+    "@symph/joy": "^1.2.7",
     "@symph/joy-css": "latest",
     "@symph/joy-image": "^0.4.1",
     "@symph/joy-less": "latest",
     "axios": "^0.18.0",
+    "fs": "^0.0.1-security",
     "good-storage": "^1.1.0",
     "jsonp": "^0.2.1",
     "lodash": "^4.17.11",

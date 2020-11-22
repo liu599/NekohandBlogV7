@@ -74,7 +74,7 @@ export default class Main extends Component {
                     </nav>
                     <header className={headerStyles.nhHeader}>
                         <img className={"lazy"}
-                             src="https://blog.nekohand.moe/static/bangdreampromote.354e8124.png"
+                             src="https://blog.ecs32.top/static/bangdreampromote.354e8124.png"
                              alt="banner"
                         />
                         <div className={headerStyles.banner}>

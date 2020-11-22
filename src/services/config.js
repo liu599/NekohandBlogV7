@@ -1,6 +1,6 @@
 export default {
-    rootUrl: 'https://www.blog.nekohand.moe',
-    fileUrl: 'https://bandori.nekohand.moe',
+    rootUrl: 'https://kasumi.ecs32.top',
+    fileUrl: 'https://mltd.ecs32.top',
     filemodules: {
         upload: 'upload',
         nekofile: 'nekofile'
@@ -28,8 +28,8 @@ export default {
             categoryDelete: 'auth/category.delete',
         },
         others: {
-            friends: 'https://mltd.nekohand.moe/service/friends',
-            favorites: 'https://mltd.nekohand.moe/service/favorites',
+            friends: 'https://api.ecs32.top/service/friends',
+            favorites: 'https://api.ecs32.top/service/favorites',
         }
     },
     genUrl: function (module, name) {
